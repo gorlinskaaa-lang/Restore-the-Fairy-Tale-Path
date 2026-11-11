@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="uk" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Станція 3. Віднови казкову стежинку — Казка «Рукавичка»</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Comfortaa & Nunito for fairytale child typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Comfortaa', 'cursive'],
+                        body: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        iceBlue: '#e0f7fa',
+                        deepBlue: '#0d47a1',
+                        skyDark: '#0a192f',
+                        goldAccent: '#ffd54f',
+                        goldDark: '#f59e0b',
+                        mittenRed: '#ef4444',
+                    },
+                    animation: {
+                        'float-slow': 'float 4s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite alternate',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-6px)' },
+                        },
+                        pulseGlow: {
+                            '0%': { filter: 'drop-shadow(0 0 4px rgba(255, 213, 79, 0.4))' },
+                            '100%': { filter: 'drop-shadow(0 0 15px rgba(255, 213, 79, 0.9))' },
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #07111e;
+            color: #ffffff;
+            user-select: none;
+            -webkit-user-select: none;
+            overflow-x: hidden;
+        }
+
+        /* Animated background canvas */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Container & Card Styling */
+        .game-card {
+            touch-action: manipulation;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.4);
+        }
+
+        .card-selected {
+            ring: 4px;
+            border-color: #ffd54f !important;
+            transform: translateY(-6px) scale(1.03) !important;
+            box-shadow: 0 12px 30px -4px rgba(255, 213, 79, 0.6) !important;
+        }
+
+        /* Drop Zone Drag feedback */
+        .drop-zone.drag-over {
+            border-color: #ffd54f !important;
+            background-color: rgba(255, 213, 79, 0.2) !important;
+            transform: scale(1.02);
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 25, 47, 0.6);
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #38bdf8;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4">
+
+    <!-- Snowfall Canvas Background -->
+    <canvas id="snow-canvas"></canvas>
+
+    <!-- Main Outer Wrapper (Aspect Ratio & Fluid Bounds) -->
+    <div class="relative z-10 w-full max-w-6xl flex flex-col justify-between bg-gradient-to-b from-slate-900/95 via-sky-950/90 to-indigo-950/95 rounded-3xl border-4 border-cyan-300/40 shadow-2xl backdrop-blur-md p-4 sm:p-6 overflow-hidden min-h-[640px]">
+        
+        <!-- Winter Ambient Background Decorations -->
+        <div class="absolute -top-24 -left-24 w-80 h-80 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- HEADER SECTION -->
+        <header class="relative z-20 flex flex-col md:flex-row items-center justify-between gap-3 border-b border-cyan-400/25 pb-3">
+            <div class="text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-cyan-950/80 border border-cyan-400/40 rounded-full text-xs font-bold text-cyan-200 tracking-wide uppercase mb-1">
+                    <span>❄️ Читацький Квест</span>
+                    <span>•</span>
+                    <span>Українська народна казка «Рукавичка»</span>
+                </div>
+                <h1 class="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 via-white to-amber-200 drop-shadow">
+                    СТАНЦІЯ 3. ВІДНОВИ КАЗКОВУ СТЕЖИНКУ
+                </h1>
+            </div>
+
+            <!-- Header Action Controls -->
+            <div class="flex items-center gap-2 shrink-0">
+                <!-- Instruction Voiceover Button -->
+                <button id="btn-audio-instruction" onclick="playInstructionAudio()" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black rounded-2xl shadow-lg border-2 border-amber-200 transition transform hover:scale-105 active:scale-95 text-xs sm:text-sm" title="Прослухати інструкцію">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM3 9v6h4l5 5V4L7 9H3z"/></svg>
+                    <span>🔊 Інструкція</span>
+                </button>
+
+                <!-- Sound FX Toggle -->
+                <button id="btn-sound-toggle" onclick="toggleSound()" class="p-2.5 bg-slate-800/90 hover:bg-slate-700 border border-cyan-400/30 rounded-2xl text-cyan-200 transition" title="Увімкнути/Вимкнути звук">
+                    <svg id="icon-sound-on" class="w-5 h-5 stroke-current fill-none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                    <svg id="icon-sound-off" class="w-5 h-5 stroke-current fill-none hidden" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
+                </button>
+
+                <!-- Canva Embed Info Button -->
+                <button onclick="openModal('modal-embed')" class="p-2.5 bg-sky-900/90 hover:bg-sky-800 border border-cyan-400/30 rounded-2xl text-cyan-200 transition" title="Інструкція Canva Embed">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- INSTRUCTION SUBTITLE BAR -->
+        <div class="relative z-20 text-center my-3">
+            <p class="text-base sm:text-lg md:text-xl font-extrabold text-cyan-100 flex items-center justify-center gap-2">
+                <span class="text-amber-300">✨</span>
+                <span>Пригадай казку та розташуй події у правильній послідовності!</span>
+                <span class="text-amber-300">✨</span>
+            </p>
+            <p class="text-xs sm:text-sm text-cyan-300/80 font-semibold mt-1">
+                💡 Підказка: перетягуй картку на потрібний номер або торкнись картки, а потім номера стежинки.
+            </p>
+        </div>
+
+        <!-- MAIN PLAY AREA -->
+        <main class="relative z-20 flex-1 flex flex-col justify-between gap-4">
+            
+            <!-- DROP ZONE TRAIL (Numbered Slots 1 -> 4) -->
+            <div class="bg-slate-950/50 rounded-2xl p-3 border-2 border-cyan-400/30 backdrop-blur-md shadow-inner">
+                <div class="flex items-center justify-between mb-2 px-2">
+                    <span class="text-xs font-black uppercase tracking-widest text-cyan-300 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-amber-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/></svg>
+                        Казкова стежинка (1 ➔ 4)
+                    </span>
+                    <span id="placed-counter" class="text-xs font-extrabold text-amber-300">Розміщено: 0 / 4</span>
+                </div>
+
+                <!-- Grid of 4 Target Slots -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    <!-- Slot 1 -->
+                    <div data-slot="1" class="drop-zone min-h-[175px] sm:min-h-[190px] bg-sky-950/50 border-2 border-dashed border-cyan-400/50 rounded-2xl p-2 flex flex-col items-center justify-center transition-all duration-300 relative group hover:border-amber-300">
+                        <div class="slot-badge absolute top-2 left-2 w-7 h-7 rounded-full bg-cyan-600 text-white font-black text-sm flex items-center justify-center shadow-md z-10">1</div>
+                        <div class="empty-placeholder text-center text-cyan-300/60 pointer-events-none p-3">
+                            <span class="text-3xl block mb-1">❄️</span>
+                            <span class="text-xs font-bold">Перша подія казки</span>
+                        </div>
+                    </div>
+
+                    <!-- Slot 2 -->
+                    <div data-slot="2" class="drop-zone min-h-[175px] sm:min-h-[190px] bg-sky-950/50 border-2 border-dashed border-cyan-400/50 rounded-2xl p-2 flex flex-col items-center justify-center transition-all duration-300 relative group hover:border-amber-300">
+                        <div class="slot-badge absolute top-2 left-2 w-7 h-7 rounded-full bg-cyan-600 text-white font-black text-sm flex items-center justify-center shadow-md z-10">2</div>
+                        <div class="empty-placeholder text-center text-cyan-300/60 pointer-events-none p-3">
+                            <span class="text-3xl block mb-1">❄️</span>
+                            <span class="text-xs font-bold">Друга подія казки</span>
+                        </div>
+                    </div>
+
+                    <!-- Slot 3 -->
+                    <div data-slot="3" class="drop-zone min-h-[175px] sm:min-h-[190px] bg-sky-950/50 border-2 border-dashed border-cyan-400/50 rounded-2xl p-2 flex flex-col items-center justify-center transition-all duration-300 relative group hover:border-amber-300">
+                        <div class="slot-badge absolute top-2 left-2 w-7 h-7 rounded-full bg-cyan-600 text-white font-black text-sm flex items-center justify-center shadow-md z-10">3</div>
+                        <div class="empty-placeholder text-center text-cyan-300/60 pointer-events-none p-3">
+                            <span class="text-3xl block mb-1">❄️</span>
+                            <span class="text-xs font-bold">Третя подія казки</span>
+                        </div>
+                    </div>
+
+                    <!-- Slot 4 -->
+                    <div data-slot="4" class="drop-zone min-h-[175px] sm:min-h-[190px] bg-sky-950/50 border-2 border-dashed border-cyan-400/50 rounded-2xl p-2 flex flex-col items-center justify-center transition-all duration-300 relative group hover:border-amber-300">
+                        <div class="slot-badge absolute top-2 left-2 w-7 h-7 rounded-full bg-cyan-600 text-white font-black text-sm flex items-center justify-center shadow-md z-10">4</div>
+                        <div class="empty-placeholder text-center text-cyan-300/60 pointer-events-none p-3">
+                            <span class="text-3xl block mb-1">❄️</span>
+                            <span class="text-xs font-bold">Четверта подія казки</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARDS SOURCE BANK -->
+            <div class="bg-slate-900/80 rounded-2xl p-3 border-2 border-indigo-400/30 backdrop-blur-md">
+                <div class="flex items-center justify-between mb-2 px-2">
+                    <span class="text-xs font-black uppercase tracking-widest text-indigo-300">
+                        Картки з подіями (Перемішані)
+                    </span>
+                    <span class="text-xs text-indigo-200/70 font-semibold">Перетягни або Обери</span>
+                </div>
+
+                <!-- Source Bank Grid -->
+                <div id="cards-bank" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 min-h-[175px] sm:min-h-[190px]">
+                    <!-- Dynamically Injected Event Cards -->
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER BAR & CHECK BUTTON -->
+        <footer class="relative z-20 flex items-center justify-between pt-3 border-t border-cyan-400/25 mt-2">
+            <button onclick="resetGame()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-cyan-200 font-bold rounded-2xl border border-cyan-400/40 shadow transition active:scale-95 text-xs sm:text-sm flex items-center gap-2">
+                <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Перемішати картки</span>
+            </button>
+
+            <!-- Main Big Action Button -->
+            <button id="btn-check" onclick="checkAnswer()" class="px-8 py-3 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white font-black text-base sm:text-lg rounded-2xl shadow-xl shadow-emerald-950/60 border-2 border-emerald-200 transition transform hover:scale-105 active:scale-95 flex items-center gap-2">
+                <span>ПЕРЕВІРИТИ</span>
+                <svg class="w-6 h-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+        </footer>
+    </div>
+
+    <!-- MODAL: SUCCESS -->
+    <div id="modal-success" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden transition-opacity duration-300 opacity-0">
+        <div class="bg-gradient-to-b from-sky-900 via-indigo-950 to-slate-950 rounded-3xl border-4 border-amber-300 p-6 sm:p-8 max-w-lg w-full text-center shadow-2xl relative overflow-hidden transform scale-90 transition-transform duration-300">
+            <div class="w-28 h-28 mx-auto mb-3 relative flex items-center justify-center">
+                <div class="absolute inset-0 bg-amber-400/30 rounded-full blur-xl animate-pulse"></div>
+                <!-- Glowing Golden Mitten Icon -->
+                <svg class="w-24 h-24 animate-bounce-gentle drop-shadow-[0_10px_20px_rgba(255,213,79,0.6)]" viewBox="0 0 100 100">
+                    <path d="M 30,25 C 20,25 15,35 15,50 C 15,75 25,90 55,90 C 75,90 85,75 85,55 C 85,35 70,25 55,25 Z" fill="#ef4444" stroke="#ffd54f" stroke-width="4"/>
+                    <path d="M 15,45 C 5,45 0,55 5,65 C 10,75 22,70 30,58 Z" fill="#dc2626" stroke="#ffd54f" stroke-width="3"/>
+                    <rect x="25" y="15" width="38" height="15" rx="7" fill="#ffffff" stroke="#e0f2fe" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="4" fill="#ffd54f" class="animate-ping"/>
+                </svg>
+            </div>
+
+            <h2 class="font-heading text-2xl sm:text-3xl font-black text-amber-300 mb-2">
+                🎉 ВІТАЄМО!
+            </h2>
+            
+            <p class="text-lg sm:text-xl font-bold text-cyan-100 mb-6 leading-relaxed">
+                «Чудово! Ти відновив казкову стежинку! Ти уважний читач!»
+            </p>
+
+            <button onclick="resetGame(); closeModal('modal-success')" class="px-8 py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black rounded-2xl shadow-xl border-2 border-amber-200 transition transform hover:scale-105 active:scale-95 text-base inline-flex items-center gap-2">
+                <span>🔄 Зіграти ще раз</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: ERROR / TRY AGAIN -->
+    <div id="modal-error" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden transition-opacity duration-300 opacity-0">
+        <div class="bg-gradient-to-b from-slate-900 via-sky-950 to-slate-950 rounded-3xl border-4 border-cyan-400/60 p-6 sm:p-8 max-w-lg w-full text-center shadow-2xl relative overflow-hidden transform scale-90 transition-transform duration-300">
+            <div class="w-20 h-20 mx-auto mb-3 bg-sky-900/70 rounded-full flex items-center justify-center border-2 border-cyan-300 text-4xl shadow-inner">
+                🤔
+            </div>
+
+            <h2 class="font-heading text-xl sm:text-2xl font-black text-cyan-200 mb-2">
+                Майже вдалося!
+            </h2>
+            
+            <p class="text-base sm:text-lg text-cyan-100 mb-6 leading-relaxed">
+                «Пригадай, що відбувалося спочатку, а що потім. Спробуй еще раз!»
+            </p>
+
+            <button onclick="closeModal('modal-error')" class="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-extrabold rounded-2xl shadow-lg border border-cyan-300 transition transform hover:scale-105 active:scale-95 text-base inline-flex items-center gap-2">
+                <span>✏️ Виправити порядок</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: CANVA EMBED INSTRUCTIONS -->
+    <div id="modal-embed" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden transition-opacity duration-300 opacity-0">
+        <div class="bg-slate-900 rounded-3xl border-2 border-cyan-400/50 p-6 max-w-xl w-full shadow-2xl relative text-left">
+            <button onclick="closeModal('modal-embed')" class="absolute top-4 right-4 p-2 text-cyan-400 hover:text-white font-bold">
+                ✕
+            </button>
+
+            <h3 class="font-heading text-xl font-bold text-cyan-200 mb-3 flex items-center gap-2">
+                <span>🎨 Вставка гри у презентацію Canva</span>
+            </h3>
+
+            <ol class="list-decimal list-inside text-sm text-cyan-100 space-y-2 mb-4 font-semibold">
+                <li>Збережіть та опублікуйте цей файл HTML на веб-хостингу (GitHub Pages, Vercel, Netlify).</li>
+                <li>Скопіюйте отриманe веб-посилання.</li>
+                <li>У редакторі Canva оберіть ліве меню <strong>«Вставка» (Embed)</strong> та вставте це посилання.</li>
+                <li>Гра з'явиться прямо на слайді вашої презентації!</li>
+            </ol>
+
+            <div class="p-3 bg-slate-950 rounded-xl border border-cyan-500/40 text-xs font-mono text-cyan-300 break-all select-all">
+                &lt;iframe src="ПОСИЛАННЯ_НА_ОПУБЛІКОВАНУ_ГРУ" width="100%" height="600" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+            </div>
+            
+            <div class="mt-4 text-right">
+                <button onclick="closeModal('modal-embed')" class="px-5 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-bold rounded-xl">
+                    Зрозуміло
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS LOGIC -->
+    <script>
+        /* ==========================================================================
+           VECTOR SVG STORY EVENTS DATA
+           Detailed, authentic SVG vectors matching the Ukrainian fairytale!
+           ========================================================================== */
+        const storyEvents = [
+            {
+                id: 1,
+                title: "1. Загублена рукавичка",
+                text: "Дід загубив рукавичку в лісі.",
+                svg: `
+                <svg viewBox="0 0 320 200" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#071b36"/>
+                            <stop offset="60%" stop-color="#143766"/>
+                            <stop offset="100%" stop-color="#23548a"/>
+                        </linearGradient>
+                        <linearGradient id="mittenPattern" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#dc2626"/>
+                            <stop offset="100%" stop-color="#991b1b"/>
+                        </linearGradient>
+                        <pattern id="embroidery" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                            <path d="M 0 4 L 8 4 M 4 0 L 4 8 M 2 2 L 6 6 M 6 2 L 2 6" stroke="#fbbf24" stroke-width="0.8"/>
+                        </pattern>
+                    </defs>
+
+                    <!-- Sky & Forest Background -->
+                    <rect width="320" height="200" fill="url(#sky1)"/>
+
+                    <!-- Distant Snowy Trees -->
+                    <path d="M 10 120 L 25 80 L 40 120 Z M 35 125 L 50 90 L 65 125 Z" fill="#1e3a8a" opacity="0.6"/>
+                    <path d="M 260 120 L 275 75 L 290 120 Z M 280 125 L 295 85 L 310 125 Z" fill="#1e3a8a" opacity="0.6"/>
+
+                    <!-- Snowy Ground Hills -->
+                    <path d="M 0 130 Q 100 100 320 135 L 320 200 L 0 200 Z" fill="#cbd5e1"/>
+                    <path d="M 0 145 Q 160 120 320 150 L 320 200 L 0 200 Z" fill="#e2e8f0"/>
+                    <path d="M 0 160 Q 140 140 320 165 L 320 200 L 0 200 Z" fill="#ffffff"/>
+
+                    <!-- Pine Trees with Snow on top -->
+                    <g transform="translate(15, 60)">
+                        <polygon points="30,80 10,120 50,120" fill="#065f46"/>
+                        <polygon points="30,55 15,90 45,90" fill="#047857"/>
+                        <polygon points="30,35 20,65 40,65" fill="#10b981"/>
+                        <path d="M 20 65 Q 30 72 40 65 Q 45 90 45 90 Q 30 98 15 90 Q 20 65 20 65 Z" fill="#ffffff" opacity="0.85"/>
+                    </g>
+                    <g transform="translate(250, 50) scale(0.9)">
+                        <polygon points="30,80 10,120 50,120" fill="#065f46"/>
+                        <polygon points="30,55 15,90 45,90" fill="#047857"/>
+                        <polygon points="30,35 20,65 40,65" fill="#10b981"/>
+                        <path d="M 20 65 Q 30 72 40 65 Q 45 90 45 90 Q 30 98 15 90 Z" fill="#ffffff" opacity="0.85"/>
+                    </g>
+
+                    <!-- Grandpa Footprints in Snow -->
+                    <g fill="#94a3b8" opacity="0.6">
+                        <ellipse cx="60" cy="180" rx="6" ry="3"/>
+                        <ellipse cx="80" cy="176" rx="6" ry="3"/>
+                        <ellipse cx="102" cy="172" rx="6" ry="3"/>
+                        <ellipse cx="125" cy="167" rx="6" ry="3"/>
+                        <ellipse cx="148" cy="162" rx="6" ry="3"/>
+                    </g>
+
+                    <!-- Dropped Red Mitten with Ukrainian Ornament -->
+                    <g transform="translate(75, 155) rotate(-22) scale(0.75)">
+                        <!-- Mitten Shadow -->
+                        <ellipse cx="45" cy="80" rx="35" ry="10" fill="#64748b" opacity="0.4"/>
+                        <!-- Main Mitten Body -->
+                        <path d="M 25 20 C 10 20 5 35 5 55 C 5 80 20 95 55 95 C 78 95 90 80 90 55 C 90 35 75 20 55 20 Z" fill="url(#mittenPattern)" stroke="#f59e0b" stroke-width="2.5"/>
+                        <!-- Thumb -->
+                        <path d="M 12 45 C -2 45 -6 58 0 70 C 6 80 22 75 28 60 Z" fill="#b91c1c" stroke="#f59e0b" stroke-width="2.5"/>
+                        <!-- Traditional Embroidery Ribbon -->
+                        <rect x="25" y="42" width="60" height="16" fill="url(#embroidery)" opacity="0.9"/>
+                        <!-- White Fluffy Cuff -->
+                        <rect x="20" y="10" width="45" height="16" rx="7" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                    </g>
+
+                    <!-- Grandpa (Walking away into forest) -->
+                    <g transform="translate(145, 80) scale(0.95)">
+                        <!-- Dog walking beside Grandpa -->
+                        <g transform="translate(-30, 45) scale(0.6)">
+                            <ellipse cx="25" cy="20" rx="14" ry="9" fill="#d97706"/>
+                            <circle cx="12" cy="14" r="7" fill="#d97706"/>
+                            <ellipse cx="6" cy="14" rx="3" ry="2" fill="#78350f"/>
+                            <path d="M 35 15 Q 45 5 40 22" stroke="#d97706" stroke-width="4" fill="none" stroke-linecap="round"/>
+                            <line x1="16" y1="26" x2="14" y2="38" stroke="#b45309" stroke-width="3"/>
+                            <line x1="28" y1="26" x2="30" y2="38" stroke="#b45309" stroke-width="3"/>
+                        </g>
+
+                        <!-- Boots -->
+                        <rect x="25" y="80" width="10" height="14" rx="4" fill="#451a03"/>
+                        <rect x="40" y="80" width="10" height="14" rx="4" fill="#451a03"/>
+                        <!-- Traditional Zhupan (Coat) -->
+                        <path d="M 15 30 L 60 30 L 72 82 L 3 82 Z" fill="#0369a1"/>
+                        <!-- Coat Fur Edging & Ornaments -->
+                        <path d="M 37 30 L 37 82" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M 37 30 L 37 82" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+                        <rect x="3" y="76" width="69" height="7" fill="#ffffff"/>
+                        <!-- Wooden Walking Staff -->
+                        <line x1="68" y1="20" x2="74" y2="92" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/>
+                        <!-- Warm Cossack Hat (Шапка-папаха) -->
+                        <path d="M 20 18 Q 37 8 54 18 Z" fill="#78350f"/>
+                        <rect x="18" y="16" width="38" height="9" rx="4" fill="#ffffff"/>
+                        <!-- Long White Beard -->
+                        <path d="M 24 28 Q 37 52 50 28 Z" fill="#ffffff"/>
+                    </g>
+
+                    <!-- Sparkling Snow Effect -->
+                    <circle cx="90" cy="145" r="2.5" fill="#fef08a" class="animate-ping"/>
+                    <circle cx="110" cy="155" r="1.5" fill="#ffffff"/>
+                </svg>`
+            },
+            {
+                id: 2,
+                title: "2. Мишка знайшла рукавичку",
+                text: "Мишка першою знайшла рукавичку.",
+                svg: `
+                <svg viewBox="0 0 320 200" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#0c2a4a"/>
+                            <stop offset="100%" stop-color="#1e40af"/>
+                        </linearGradient>
+                        <linearGradient id="mittenBody" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#ef4444"/>
+                            <stop offset="100%" stop-color="#b91c1c"/>
+                        </linearGradient>
+                    </defs>
+
+                    <rect width="320" height="200" fill="url(#sky2)"/>
+
+                    <!-- Background Winter Forest -->
+                    <path d="M 0 120 Q 80 95 320 125 L 320 200 L 0 200 Z" fill="#cbd5e1"/>
+                    <path d="M 0 140 Q 160 115 320 145 L 320 200 L 0 200 Z" fill="#ffffff"/>
+
+                    <g transform="translate(220, 25)">
+                        <polygon points="40,110 15,150 65,150" fill="#047857"/>
+                        <polygon points="40,70 20,115 60,115" fill="#10b981"/>
+                        <polygon points="40,40 28,75 52,75" fill="#34d399"/>
+                        <path d="M 20 115 Q 40 125 60 115 Z" fill="#ffffff"/>
+                    </g>
+
+                    <!-- Large Warm Red Mitten resting on snow -->
+                    <g transform="translate(100, 65) rotate(-10) scale(1.05)">
+                        <ellipse cx="50" cy="90" rx="45" ry="12" fill="#64748b" opacity="0.35"/>
+                        <!-- Mitten Base -->
+                        <path d="M 25 20 C 10 20 5 35 5 55 C 5 85 25 100 65 100 C 90 100 105 85 105 55 C 105 35 85 20 65 20 Z" fill="url(#mittenBody)" stroke="#f59e0b" stroke-width="3"/>
+                        <!-- Thumb -->
+                        <path d="M 15 45 C 0 45 -4 60 2 72 C 8 82 25 78 32 62 Z" fill="#dc2626" stroke="#f59e0b" stroke-width="3"/>
+                        <!-- Ornaments -->
+                        <path d="M 35 30 Q 65 30 95 30" stroke="#fef08a" stroke-width="3" stroke-dasharray="4 4"/>
+                        <path d="M 30 50 Q 65 50 100 50" stroke="#fef08a" stroke-width="3" stroke-dasharray="6 4"/>
+                        <!-- Fluffy Cuff Opening -->
+                        <rect x="20" y="8" width="55" height="20" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2.5"/>
+                    </g>
+
+                    <!-- Little Cute Grey Mouse wearing a Ukrainian Kerchief (Хустка) -->
+                    <g transform="translate(45, 110) scale(0.95)">
+                        <!-- Mouse Footprints -->
+                        <circle cx="-15" cy="45" r="1.5" fill="#64748b"/>
+                        <circle cx="-8" cy="42" r="1.5" fill="#64748b"/>
+                        <circle cx="0" cy="44" r="1.5" fill="#64748b"/>
+
+                        <!-- Mouse Body -->
+                        <ellipse cx="40" cy="35" rx="22" ry="15" fill="#94a3b8"/>
+                        <!-- Long Pink Tail -->
+                        <path d="M 60 38 Q 85 45 78 20" stroke="#f472b6" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                        <!-- Head -->
+                        <ellipse cx="20" cy="30" rx="14" ry="11" fill="#94a3b8"/>
+                        <!-- Snout & Nose -->
+                        <polygon points="10,32 2,35 12,39" fill="#94a3b8"/>
+                        <circle cx="2" cy="35" r="3" fill="#f472b6"/>
+                        <!-- Eye -->
+                        <circle cx="16" cy="27" r="2.5" fill="#000000"/>
+                        <circle cx="15" cy="26" r="0.8" fill="#ffffff"/>
+                        <!-- Whiskers -->
+                        <line x1="4" y1="33" x2="-6" y2="28" stroke="#cbd5e1" stroke-width="1.5"/>
+                        <line x1="4" y1="36" x2="-6" y2="40" stroke="#cbd5e1" stroke-width="1.5"/>
+
+                        <!-- Ukrainian Red Kerchief (Хусточка) on Head -->
+                        <path d="M 12 24 Q 22 14 32 24 L 26 34 Z" fill="#ef4444"/>
+                        <circle cx="20" cy="18" r="7" fill="#dc2626"/>
+                        <circle cx="20" cy="18" r="4" fill="#f472b6"/>
+                        <!-- Kerchief Knot -->
+                        <circle cx="24" cy="34" r="2.5" fill="#b91c1c"/>
+                    </g>
+
+                    <!-- Curious speech mark "Хто-хто в цій рукавичці?" -->
+                    <g transform="translate(85, 55)">
+                        <rect x="0" y="0" width="125" height="26" rx="10" fill="#ffffff" stroke="#38bdf8" stroke-width="2"/>
+                        <text x="62" y="17" font-family="Comfortaa" font-weight="bold" font-size="10" fill="#0f172a" text-anchor="middle">Тут я буду жити! 🐭</text>
+                        <polygon points="15,26 22,26 12,34" fill="#ffffff"/>
+                    </g>
+                </svg>`
+            },
+            {
+                id: 3,
+                title: "3. Дружні звірята",
+                text: "До рукавички почали приходити інші звірята та оселятися в ній.",
+                svg: `
+                <svg viewBox="0 0 320 200" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#091428"/>
+                            <stop offset="100%" stop-color="#1e293b"/>
+                        </linearGradient>
+                        <radialGradient id="warmGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.8"/>
+                            <stop offset="50%" stop-color="#f59e0b" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="#d97706" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+
+                    <rect width="320" height="200" fill="url(#sky3)"/>
+
+                    <!-- Snowy background with warm light -->
+                    <path d="M 0 135 Q 160 110 320 140 L 320 200 L 0 200 Z" fill="#e2e8f0"/>
+                    <path d="M 0 150 Q 160 125 320 155 L 320 200 L 0 200 Z" fill="#ffffff"/>
+
+                    <!-- Warm Glow Circle from Mitten House -->
+                    <circle cx="160" cy="105" r="85" fill="url(#warmGlow)" class="animate-pulse"/>
+
+                    <!-- Giant Cozy Mitten House -->
+                    <g transform="translate(80, 45) scale(1.1)">
+                        <!-- Outer Mitten Outline -->
+                        <path d="M 25 20 C 5 20 -5 40 -5 70 C -5 105 20 118 75 118 C 110 118 130 100 130 65 C 130 35 100 20 70 20 Z" fill="#ef4444" stroke="#f59e0b" stroke-width="3.5"/>
+                        <!-- Thumb as side room -->
+                        <path d="M 8 50 C -15 50 -20 70 -10 85 C -2 95 18 90 25 72 Z" fill="#dc2626" stroke="#f59e0b" stroke-width="3"/>
+
+                        <!-- Cozy Chimney on Mitten with Smoke -->
+                        <rect x="85" y="5" width="16" height="25" rx="3" fill="#b91c1c" stroke="#78350f" stroke-width="2"/>
+                        <!-- Smoke Puffs -->
+                        <circle cx="93" cy="-3" r="6" fill="#f1f5f9" opacity="0.7"/>
+                        <circle cx="98" cy="-14" r="9" fill="#f1f5f9" opacity="0.5"/>
+                        <circle cx="106" cy="-28" r="12" fill="#f1f5f9" opacity="0.3"/>
+
+                        <!-- Fur Cuff Entrance Window -->
+                        <rect x="25" y="8" width="55" height="22" rx="10" fill="#ffffff" stroke="#fef08a" stroke-width="3"/>
+
+                        <!-- ANIMAL FRIENDS PEEKING OUT -->
+                        <!-- 1. Bear (Top Center) -->
+                        <g transform="translate(42, -2)">
+                            <circle cx="8" cy="6" r="5" fill="#78350f"/>
+                            <circle cx="24" cy="6" r="5" fill="#78350f"/>
+                            <ellipse cx="16" cy="12" rx="11" ry="8" fill="#92400e"/>
+                            <ellipse cx="16" cy="14" rx="5" ry="3.5" fill="#fde047"/>
+                            <circle cx="16" cy="13" r="1.8" fill="#000"/>
+                        </g>
+
+                        <!-- 2. Bunny (Left Ear) -->
+                        <g transform="translate(18, -4)">
+                            <ellipse cx="4" cy="4" rx="2.5" ry="9" fill="#f1f5f9"/>
+                            <ellipse cx="10" cy="4" rx="2.5" ry="9" fill="#f1f5f9"/>
+                            <circle cx="7" cy="12" r="5" fill="#e2e8f0"/>
+                        </g>
+
+                        <!-- 3. Fox (Right Side) -->
+                        <g transform="translate(56, 2)">
+                            <polygon points="2,12 14,2 14,14" fill="#ea580c"/>
+                            <polygon points="14,2 26,12 14,14" fill="#ea580c"/>
+                            <polygon points="6,12 14,19 22,12" fill="#f97316"/>
+                            <circle cx="14" cy="18" r="1.5" fill="#000"/>
+                        </g>
+
+                        <!-- 4. Frog (Green Peeking at Window bottom) -->
+                        <g transform="translate(30, 16)">
+                            <ellipse cx="6" cy="6" rx="5" ry="4" fill="#22c55e"/>
+                            <circle cx="4" cy="4" r="1.8" fill="#fff"/>
+                            <circle cx="4" cy="4" r="0.8" fill="#000"/>
+                            <ellipse cx="20" cy="6" rx="5" ry="4" fill="#22c55e"/>
+                            <circle cx="22" cy="4" r="1.8" fill="#fff"/>
+                            <circle cx="22" cy="4" r="0.8" fill="#000"/>
+                        </g>
+
+                        <!-- 5. Boar & Wolf (Window Sides) -->
+                        <circle cx="14" cy="22" r="4" fill="#475569"/> <!-- Wolf snout -->
+                        <circle cx="68" cy="22" r="4.5" fill="#78350f"/> <!-- Boar snout -->
+                    </g>
+
+                    <!-- Festive Sparks & Snowflakes -->
+                    <circle cx="60" cy="80" r="3" fill="#fef08a"/>
+                    <circle cx="260" cy="90" r="3" fill="#fef08a"/>
+                    <text x="160" y="185" font-family="Comfortaa" font-weight="extrabold" font-size="12" fill="#0f172a" text-anchor="middle">Усі разом у мирі та теплі! 🐸🐰🦊🐺🐗🐻</text>
+                </svg>`
+            },
+            {
+                id: 4,
+                title: "4. Повернення Діда",
+                text: "Дід повернувся за рукавичкою.",
+                svg: `
+                <svg viewBox="0 0 320 200" class="w-full h-full rounded-xl overflow-hidden shadow-inner">
+                    <defs>
+                        <linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#0284c7"/>
+                            <stop offset="60%" stop-color="#0369a1"/>
+                            <stop offset="100%" stop-color="#0f172a"/>
+                        </linearGradient>
+                    </defs>
+
+                    <rect width="320" height="200" fill="url(#sky4)"/>
+
+                    <!-- Snow Hills -->
+                    <path d="M 0 125 Q 160 100 320 130 L 320 200 L 0 200 Z" fill="#e2e8f0"/>
+                    <path d="M 0 145 Q 160 120 320 150 L 320 200 L 0 200 Z" fill="#ffffff"/>
+
+                    <!-- Grandpa Returning -->
+                    <g transform="translate(20, 65) scale(0.95)">
+                        <!-- Zhupan Coat -->
+                        <path d="M 15 30 L 55 30 L 65 85 L 5 85 Z" fill="#0284c7"/>
+                        <!-- Fur Trim & White Beard -->
+                        <rect x="5" y="80" width="60" height="8" fill="#ffffff"/>
+                        <line x1="35" y1="30" x2="35" y2="80" stroke="#ffffff" stroke-width="5"/>
+                        <!-- Hat -->
+                        <path d="M 18 18 Q 35 8 52 18 Z" fill="#78350f"/>
+                        <rect x="15" y="16" width="38" height="8" rx="3" fill="#ffffff"/>
+                        <!-- Beard -->
+                        <path d="M 22 28 Q 35 55 48 28 Z" fill="#ffffff"/>
+                        <!-- Staff pointing at mitten -->
+                        <line x1="55" y1="35" x2="85" y2="65" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- Dog Running Forward and Barking -->
+                    <g transform="translate(125, 110) scale(0.9)">
+                        <!-- Dog Body -->
+                        <ellipse cx="25" cy="20" rx="16" ry="10" fill="#d97706"/>
+                        <circle cx="10" cy="13" r="8" fill="#d97706"/>
+                        <ellipse cx="4" cy="13" rx="4" ry="2.5" fill="#78350f"/>
+                        <!-- Ears & Tail -->
+                        <path d="M 12 6 Q 6 0 14 2" stroke="#b45309" stroke-width="3" fill="none"/>
+                        <path d="M 38 15 Q 50 5 45 22" stroke="#d97706" stroke-width="4" fill="none"/>
+                        <!-- Running Legs -->
+                        <line x1="14" y1="28" x2="6" y2="40" stroke="#b45309" stroke-width="3.5"/>
+                        <line x1="30" y1="28" x2="38" y2="40" stroke="#b45309" stroke-width="3.5"/>
+
+                        <!-- Bark Bubble "ГАВ-ГАВ!" -->
+                        <g transform="translate(-10, -35)">
+                            <path d="M 0 0 L 45 0 C 50 0 50 20 45 20 L 15 20 L 5 28 L 8 20 L 0 20 Z" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+                            <text x="22" y="14" font-family="Comfortaa" font-weight="black" font-size="9" fill="#dc2626" text-anchor="middle">ГАВ-ГАВ!</text>
+                        </g>
+                    </g>
+
+                    <!-- Animals Scattering / Running Away -->
+                    <!-- Bunny running away right -->
+                    <g transform="translate(255, 115) scale(0.75)">
+                        <ellipse cx="15" cy="15" rx="10" ry="6" fill="#f1f5f9"/>
+                        <ellipse cx="22" cy="7" rx="3" ry="8" fill="#f1f5f9"/>
+                        <circle cx="5" cy="15" r="3" fill="#ffffff"/>
+                    </g>
+
+                    <!-- Fox tail disappearing into woods -->
+                    <g transform="translate(285, 105) scale(0.7)">
+                        <path d="M 0 20 Q 20 0 15 30" stroke="#ea580c" stroke-width="8" fill="none" stroke-linecap="round"/>
+                        <path d="M 12 24 Q 20 18 15 30" stroke="#ffffff" stroke-width="4" fill="none"/>
+                    </g>
+
+                    <!-- Mitten on Snow -->
+                    <g transform="translate(200, 135) scale(0.65) rotate(15)">
+                        <path d="M 25 20 C 10 20 5 35 5 55 C 5 80 20 95 55 95 C 78 95 90 80 90 55 Z" fill="#ef4444" stroke="#f59e0b" stroke-width="3"/>
+                        <rect x="20" y="10" width="45" height="15" rx="6" fill="#ffffff"/>
+                    </g>
+                </svg>`
+            }
+        ];
+
+        /* Game Logic State */
+        let selectedCardId = null;
+        let placedState = { 1: null, 2: null, 3: null, 4: null };
+        let isAudioEnabled = true;
+
+        /* ==========================================================================
+           WEB AUDIO SYNTHESIZER
+           ========================================================================== */
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioContext();
+        }
+
+        function playSound(type) {
+            if (!isAudioEnabled) return;
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'drop') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(550, now + 0.12);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                } else if (type === 'success') {
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const subOsc = audioCtx.createOscillator();
+                        const subGain = audioCtx.createGain();
+                        subOsc.type = 'sine';
+                        subOsc.frequency.setValueAtTime(freq, now + idx * 0.1);
+                        subGain.gain.setValueAtTime(0.2, now + idx * 0.1);
+                        subGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.35);
+                        subOsc.connect(subGain);
+                        subGain.connect(audioCtx.destination);
+                        subOsc.start(now + idx * 0.1);
+                        subOsc.stop(now + idx * 0.1 + 0.35);
+                    });
+                } else if (type === 'error') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(240, now);
+                    osc.frequency.setValueAtTime(170, now + 0.15);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                }
+            } catch (e) {
+                console.log("Audio play error", e);
+            }
+        }
+
+        function toggleSound() {
+            isAudioEnabled = !isAudioEnabled;
+            document.getElementById('icon-sound-on').classList.toggle('hidden', !isAudioEnabled);
+            document.getElementById('icon-sound-off').classList.toggle('hidden', isAudioEnabled);
+            if (isAudioEnabled) playSound('click');
+        }
+
+        /* ==========================================================================
+           TEXT TO SPEECH (Ukrainian Web Speech API)
+           ========================================================================== */
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'uk-UA';
+            utterance.rate = 0.9;
+
+            const voices = window.speechSynthesis.getVoices();
+            const ukVoice = voices.find(v => v.lang.includes('uk') || v.lang.includes('UA'));
+            if (ukVoice) utterance.voice = ukVoice;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playInstructionAudio() {
+            playSound('click');
+            speakText("Пригадай казку та розташуй події у правильній послідовності! Перетягуй картки або натисни на картку, а потім на номер стежинки.");
+        }
+
+        /* ==========================================================================
+           CARD CREATION & RENDERING
+           ========================================================================== */
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function createCardElement(eventItem) {
+            const card = document.createElement('div');
+            card.id = `card-${eventItem.id}`;
+            card.dataset.cardId = eventItem.id;
+            card.draggable = true;
+            card.className = "game-card bg-slate-800/95 border-2 border-cyan-400/40 rounded-2xl p-2 flex flex-col justify-between cursor-grab active:cursor-grabbing shadow-lg relative group select-none h-full";
+
+            card.innerHTML = `
+                <div class="w-full h-24 sm:h-28 rounded-xl overflow-hidden mb-2 pointer-events-none border border-cyan-300/20 shadow-inner">
+                    ${eventItem.svg}
+                </div>
+                <p class="text-xs sm:text-sm font-extrabold text-cyan-100 line-clamp-2 mb-2 pointer-events-none leading-snug px-1">
+                    ${eventItem.text}
+                </p>
+                <div class="flex items-center justify-between gap-1 mt-auto px-1">
+                    <button type="button" onclick="event.stopPropagation(); speakText('${eventItem.text.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-sky-950 hover:bg-sky-800 border border-cyan-400/50 rounded-lg text-[11px] font-bold text-cyan-200 flex items-center gap-1 transition shadow" title="Прослухати">
+                        <span>🔊</span>
+                        <span>Слухати</span>
+                    </button>
+                    <span class="text-[10px] text-amber-300 font-extrabold uppercase tracking-wider">
+                        Обери 📍
+                    </span>
+                </div>
+            `;
+
+            // HTML5 Drag Events
+            card.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', eventItem.id);
+                card.classList.add('opacity-50');
+                selectCard(eventItem.id);
+            });
+
+            card.addEventListener('dragend', () => {
+                card.classList.remove('opacity-50');
+            });
+
+            // Tap / Click Event for accessible touch support
+            card.addEventListener('click', () => {
+                selectCard(eventItem.id);
+            });
+
+            return card;
+        }
+
+        function renderCards() {
+            const bank = document.getElementById('cards-bank');
+            bank.innerHTML = '';
+
+            // Clear drop zones
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                const existingCard = zone.querySelector('.game-card');
+                if (existingCard) existingCard.remove();
+                zone.querySelector('.empty-placeholder').classList.remove('hidden');
+                zone.classList.remove('border-emerald-400', 'border-rose-400', 'bg-emerald-950/40', 'bg-rose-950/40');
+            });
+
+            // Reset state
+            selectedCardId = null;
+            placedState = { 1: null, 2: null, 3: null, 4: null };
+            updateCounter();
+
+            // Shuffle cards
+            const shuffled = shuffleArray(storyEvents);
+            shuffled.forEach(item => {
+                const cardEl = createCardElement(item);
+                bank.appendChild(cardEl);
+            });
+        }
+
+        /* ==========================================================================
+           INTERACTION & PLACEMENT LOGIC
+           ========================================================================== */
+        function selectCard(cardId) {
+            playSound('click');
+            selectedCardId = cardId;
+
+            document.querySelectorAll('.game-card').forEach(c => {
+                if (parseInt(c.dataset.cardId) === cardId) {
+                    c.classList.add('card-selected');
+                } else {
+                    c.classList.remove('card-selected');
+                }
+            });
+        }
+
+        function placeCardInSlot(cardId, slotId) {
+            const cardEl = document.getElementById(`card-${cardId}`);
+            const targetSlot = document.querySelector(`.drop-zone[data-slot="${slotId}"]`);
+            if (!cardEl || !targetSlot) return;
+
+            // Remove from previous slot if applicable
+            Object.keys(placedState).forEach(s => {
+                if (placedState[s] === cardId) {
+                    placedState[s] = null;
+                    const oldSlot = document.querySelector(`.drop-zone[data-slot="${s}"]`);
+                    if (oldSlot) oldSlot.querySelector('.empty-placeholder').classList.remove('hidden');
+                }
+            });
+
+            // If slot occupied, return existing card to bank
+            const existingCardInSlot = targetSlot.querySelector('.game-card');
+            if (existingCardInSlot) {
+                const existingId = parseInt(existingCardInSlot.dataset.cardId);
+                document.getElementById('cards-bank').appendChild(existingCardInSlot);
+                Object.keys(placedState).forEach(s => {
+                    if (placedState[s] === existingId) placedState[s] = null;
+                });
+            }
+
+            // Move card into target slot
+            targetSlot.appendChild(cardEl);
+            targetSlot.querySelector('.empty-placeholder').classList.add('hidden');
+            placedState[slotId] = cardId;
+
+            cardEl.classList.remove('card-selected');
+            selectedCardId = null;
+
+            playSound('drop');
+            updateCounter();
+        }
+
+        function setupDropZones() {
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            dropZones.forEach(zone => {
+                const slotId = parseInt(zone.dataset.slot);
+
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const cardId = parseInt(e.dataTransfer.getData('text/plain') || selectedCardId);
+                    if (cardId) placeCardInSlot(cardId, slotId);
+                });
+
+                zone.addEventListener('click', () => {
+                    if (selectedCardId !== null) {
+                        placeCardInSlot(selectedCardId, slotId);
+                    }
+                });
+            });
+
+            // Tap empty bank to deselect/return card
+            const bank = document.getElementById('cards-bank');
+            bank.addEventListener('click', (e) => {
+                if (selectedCardId !== null && e.target === bank) {
+                    const cardEl = document.getElementById(`card-${selectedCardId}`);
+                    if (cardEl) {
+                        bank.appendChild(cardEl);
+                        Object.keys(placedState).forEach(s => {
+                            if (placedState[s] === selectedCardId) {
+                                placedState[s] = null;
+                                const oldSlot = document.querySelector(`.drop-zone[data-slot="${s}"]`);
+                                if (oldSlot) oldSlot.querySelector('.empty-placeholder').classList.remove('hidden');
+                            }
+                        });
+                        cardEl.classList.remove('card-selected');
+                        selectedCardId = null;
+                        playSound('drop');
+                        updateCounter();
+                    }
+                }
+            });
+        }
+
+        function updateCounter() {
+            const count = Object.values(placedState).filter(v => v !== null).length;
+            document.getElementById('placed-counter').innerText = `Розміщено: ${count} / 4`;
+        }
+
+        /* ==========================================================================
+           ANSWER VERIFICATION
+           ========================================================================== */
+        function checkAnswer() {
+            playSound('click');
+
+            const filledCount = Object.values(placedState).filter(v => v !== null).length;
+            if (filledCount < 4) {
+                speakText("Будь ласка, розташуй усі 4 події на стежинці перед перевіркою!");
+                document.querySelectorAll('.drop-zone').forEach(zone => {
+                    const slot = zone.dataset.slot;
+                    if (!placedState[slot]) {
+                        zone.classList.add('border-amber-400');
+                        setTimeout(() => zone.classList.remove('border-amber-400'), 1500);
+                    }
+                });
+                return;
+            }
+
+            let isCorrect = true;
+            for (let i = 1; i <= 4; i++) {
+                const zone = document.querySelector(`.drop-zone[data-slot="${i}"]`);
+                if (placedState[i] === i) {
+                    zone.classList.add('border-emerald-400', 'bg-emerald-950/40');
+                    zone.classList.remove('border-rose-400', 'bg-rose-950/40');
+                } else {
+                    isCorrect = false;
+                    zone.classList.add('border-rose-400', 'bg-rose-950/40');
+                    zone.classList.remove('border-emerald-400', 'bg-emerald-950/40');
+                }
+            }
+
+            if (isCorrect) {
+                playSound('success');
+                speakText("Чудово! Ти відновив казкову стежинку! Ти уважний читач!");
+                openModal('modal-success');
+            } else {
+                playSound('error');
+                speakText("Майже вдалося! Пригадай, що відбувалося спочатку, а що потім. Спробуй ще раз!");
+                openModal('modal-error');
+            }
+        }
+
+        function resetGame() {
+            playSound('click');
+            renderCards();
+        }
+
+        /* ==========================================================================
+           MODAL CONTROL
+           ========================================================================== */
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.children[0].classList.remove('scale-90');
+                modal.children[0].classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (!modal) return;
+            modal.classList.add('opacity-0');
+            modal.children[0].classList.remove('scale-100');
+            modal.children[0].classList.add('scale-90');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        /* ==========================================================================
+           SNOW CANVAS ANIMATION
+           ========================================================================== */
+        function initSnowCanvas() {
+            const canvas = document.getElementById('snow-canvas');
+            const ctx = canvas.getContext('2d');
+            let width = (canvas.width = window.innerWidth);
+            let height = (canvas.height = window.innerHeight);
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const snowflakes = Array.from({ length: 70 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 3 + 1,
+                density: Math.random() * 0.8 + 0.4,
+                opacity: Math.random() * 0.7 + 0.3
+            }));
+
+            function drawSnow() {
+                ctx.clearRect(0, 0, width, height);
+
+                snowflakes.forEach(flake => {
+                    ctx.beginPath();
+                    ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(224, 247, 250, ${flake.opacity})`;
+                    ctx.fill();
+
+                    flake.y += flake.density;
+                    flake.x += Math.sin(flake.y / 25) * 0.5;
+
+                    if (flake.y > height) {
+                        flake.y = -10;
+                        flake.x = Math.random() * width;
+                    }
+                });
+
+                requestAnimationFrame(drawSnow);
+            }
+
+            drawSnow();
+        }
+
+        /* Initial Setup */
+        window.addEventListener('load', () => {
+            initSnowCanvas();
+            setupDropZones();
+            renderCards();
+        });
+    </script>
+</body>
+</html>
